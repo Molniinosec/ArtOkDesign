@@ -1,0 +1,64 @@
+﻿<Window x:Class="ArtOkDesign.Windowses.Template"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArtOkDesign.Windowses"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Template" Height="500" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding User.NickName}"
+                   FontSize="20"
+                   Foreground="Green">
+            
+        </TextBlock>
+        <TextBlock Grid.Row="1" Text="{Binding Description}"
+                   FontSize="20"
+                   TextWrapping="Wrap"
+                   Foreground="Green">
+            
+        </TextBlock>
+        <Image Grid.Row="2" Source="{Binding Picture.PicturePath}"></Image>
+        <WrapPanel Grid.Row="3" HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+            <Button  Width="100" Background="White" FontSize="20">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Name="likeCount" Text="150"/>
+                    <materialDesign:PackIcon Kind="HeartOutline" Width="30" Height="25"/>
+                </StackPanel>
+            </Button>
+            <Button  Width="100" Background="White" FontSize="20">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="repostCont" Text="150"/>
+                    <materialDesign:PackIcon Kind="ShareOutline" Height="25" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Button  Width="100" Background="White" FontSize="20">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="commentCount" Text="150"/>
+                    <materialDesign:PackIcon Kind="CommentOutline" Height="20" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Button  Width="100" Background="White" FontSize="20">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="tagCount" Text="150"/>
+                    <materialDesign:PackIcon Kind="Tag" Height="20" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Button  Width="100" Background="White" FontSize="20">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Name="popAppCount" Text="150"/>
+                    <materialDesign:PackIcon Kind="HammerWrench" Height="20" Width="30"/>
+                </StackPanel>
+            </Button>
+        </WrapPanel>
+    </Grid>
+</Window>

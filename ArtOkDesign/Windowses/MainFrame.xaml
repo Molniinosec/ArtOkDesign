@@ -1,0 +1,100 @@
+﻿<Window x:Class="ArtOkDesign.Windowses.MainFrame"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArtOkDesign.Windowses"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStartupLocation="CenterScreen"
+        Title="ArtOk" Height="800" Width="1200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel Grid.Column="1"
+                    VerticalAlignment="Center">
+            <TextBox x:Name="txtSearch"
+                   Height="50" Width="600"
+                   Foreground="Green"
+                   materialDesign:HintAssist.Hint="Поиск"
+                   FontSize="20">
+
+            </TextBox>
+         
+        </WrapPanel>
+        <Expander Grid.Column="1" Grid.RowSpan="2"
+                  VerticalAlignment="top"
+                  HorizontalAlignment="Right"
+                  
+                  >
+            <Expander.Header>
+                <TextBlock Foreground="Green"
+                           FontSize="20">Создать пост</TextBlock>
+            </Expander.Header>
+            <StackPanel>
+                <TextBox FontSize="20"
+                         Width="350"
+                         x:Name="txtDescr"
+                         TextWrapping="Wrap"
+                         Foreground="Green"
+                         materialDesign:HintAssist.Hint="Введите описание"
+                         ></TextBox>
+                <Image Height="50" Width="50"
+                       Name="imgPost"
+                       HorizontalAlignment="Left"
+                      MouseDown="imgPost_MouseDown"
+                       
+                    Source="/Res/addImage.png"></Image>
+                <Button  Width="150" Background="White" FontSize="20" 
+                         HorizontalAlignment="Right"
+                         Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Запостить" Cursor="Hand"/>
+                        <materialDesign:PackIcon HorizontalAlignment="Right" Kind="Upload" Height="20" Width="30"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Expander>
+
+        <WrapPanel Grid.Row="1">
+            <Button x:Name="btnAllPosts"
+                    Width="200" Height="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Лента постов"
+                    FontSize="20"
+                    Foreground="Green"
+                    Style="{StaticResource MaterialDesignOutlinedDarkButton}" Click="btnAllPosts_Click">
+                
+            </Button>
+            <Button x:Name="btnFollowedPost"
+                    Width="200" Height="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Лента  подписок"
+                    FontSize="20"
+                    Foreground="Green"
+                    Style="{StaticResource MaterialDesignOutlinedDarkButton}" Click="btnFollowedPost_Click">
+
+            </Button>
+
+        </WrapPanel>
+       
+        <Frame x:Name="PostFrame"
+               Grid.Row="1" Grid.Column="1"
+               NavigationUIVisibility="Hidden"
+               >
+            
+        </Frame>
+        <Image Source="/Res/326UEVTsopU.jpg">
+            
+        </Image>
+    </Grid>
+</Window>
