@@ -33,7 +33,20 @@ namespace ArtOkDesign.Classes
         public string PostNickName { get; set; }
 
         public int PostLikes { get; set; }
+        public int CommentCount { get; set; }
+        public int TagCount { get; set; }
+        public int PopAppCount { get; set; }    
+        public int RepostCount { get; set; }
         public byte[] PostImage { get; set; }
         public BitmapImage IFile { get; set; }
+        public byte[] UserProfPicture { get; set; }
+        public string Taging { get; set; }
+        public PostComment[] CommentList { get; set; }
+        public string WPVisibility { get; set; }      
+        public string ImageVisibility { get; set; }
+        public string LVHeight { get; set; }
+        public string ListVisability { get; set; }
+        public bool IsDialogsHidden { get; set; }
+        public string LikeIcon { get; set; }
     }   
 }

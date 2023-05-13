@@ -23,6 +23,7 @@
             <TextBox x:Name="txtSearch"
                    Height="50" Width="600"
                    Foreground="Green"
+                   KeyDown="txtSearch_KeyDown"
                    materialDesign:HintAssist.Hint="Поиск"
                    FontSize="20">
 
@@ -32,7 +33,7 @@
         <Expander Grid.Column="1" Grid.RowSpan="2"
                   VerticalAlignment="top"
                   HorizontalAlignment="Right"
-                  
+                  Panel.ZIndex="1"
                   >
             <Expander.Header>
                 <TextBlock Foreground="Green"
@@ -52,14 +53,39 @@
                       MouseDown="imgPost_MouseDown"
                        
                     Source="/Res/addImage.png"></Image>
-                <Button  Width="150" Background="White" FontSize="20" 
+                <WrapPanel HorizontalAlignment="Center">
+                    <Expander Margin="0 0 100 0" VerticalAlignment="Center"
+                              >
+                        <Expander.Header>
+                            <materialDesign:PackIcon Kind="Tag" Width="25" Height="25">
+                                
+                            </materialDesign:PackIcon>
+                        </Expander.Header>
+                        <ListView x:Name="lvTagsInAddPost" Height="100">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox FontSize="12" Unchecked="CheckBox_Checked"
+                                              Checked="CheckBox_Checked"  Content="{Binding NameTag}"></CheckBox>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Expander>
+                    <Button  Width="150" Background="White" FontSize="20" 
+                         Click="Button_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Запостить" Cursor="Hand"/>
+                            <materialDesign:PackIcon HorizontalAlignment="Right" Kind="Upload" Height="20" Width="30"/>
+                        </StackPanel>
+                    </Button>
+                </WrapPanel>
+                <!--<Button  Width="150" Background="White" FontSize="20" 
                          HorizontalAlignment="Right"
                          Click="Button_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Запостить" Cursor="Hand"/>
                         <materialDesign:PackIcon HorizontalAlignment="Right" Kind="Upload" Height="20" Width="30"/>
                     </StackPanel>
-                </Button>
+                </Button>-->
             </StackPanel>
         </Expander>
 
@@ -84,15 +110,37 @@
                     Style="{StaticResource MaterialDesignOutlinedDarkButton}" Click="btnFollowedPost_Click">
 
             </Button>
+            <Button x:Name="btnSelectDialog"
+                    Width="200" Height="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Диалоги"
+                    FontSize="20"
+                    Foreground="Green"
+                    Style="{StaticResource MaterialDesignOutlinedDarkButton}" Click="btnSelectDialog_Click">
+
+            </Button>
+            <Button x:Name="btnProfile"
+                    Width="200" Height="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Профиль"
+                    FontSize="20"
+                    Foreground="Green"
+                    Style="{StaticResource MaterialDesignOutlinedDarkButton}" Click="btnProfile_Click">
+
+            </Button>
 
         </WrapPanel>
-       
-        <Frame x:Name="PostFrame"
+
+            <Frame x:Name="PostFrame"
                Grid.Row="1" Grid.Column="1"
                NavigationUIVisibility="Hidden"
-               >
-            
-        </Frame>
+               Panel.ZIndex="0">
+
+            </Frame>
+
+       
         <Image Source="/Res/326UEVTsopU.jpg">
             
         </Image>

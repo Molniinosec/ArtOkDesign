@@ -18,5 +18,10 @@ namespace ArtOkDesign.Classes
 
         public Post Post { get; set; }
         public User User { get; set; }
+
+
+        public string CommentNick { get; set; }
+        public byte[] PostPP { get; set; }
+        public string ListVisability { get; set; }
     }
 }

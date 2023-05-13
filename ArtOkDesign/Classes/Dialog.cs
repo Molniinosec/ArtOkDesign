@@ -14,5 +14,7 @@ namespace ArtOkDesign.Classes
         public string DialogPicture { get; set; }
 
         public ICollection<DialogUser> DialogUser { get; set; }
+        
+        public List<Messages> DialogMessages { get; set; }
     }
 }

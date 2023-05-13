@@ -6,14 +6,16 @@
       xmlns:local="clr-namespace:ArtOkDesign.Pages"
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      d:DesignHeight="450" d:DesignWidth="900"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="PostPage">
 
     <Grid>
 
         <ListView x:Name="LvPosts" HorizontalAlignment="Left"
-                  Margin=" 10 0 0 0"
+                  Margin=" 10 0 0 0" Width="750"
                   VerticalAlignment="Center"
+                  
+                  ScrollViewer.CanContentScroll="False"
                   ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -29,24 +31,33 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="5*"/>
                             <RowDefinition Height="40"/>
+                            <RowDefinition Height="{Binding LVHeight}"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
-                <TextBlock Text="{Binding PostNickName}"
-            FontSize="20"
-            Foreground="Green"
+                        <WrapPanel>
+                            <Image Source="{Binding UserProfPicture}"
+                                   Width="30" Height="30">
+
+                            </Image>
+                            <TextBlock Text="{Binding PostNickName}"
+                              FontSize="20"
+                              Foreground="Green"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center">
 
-                </TextBlock>
-                <TextBlock Grid.Row="1" Text="{Binding Description}"
+                            </TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="1" Text="{Binding Description}"
             FontSize="20"
             TextWrapping="Wrap"
             Foreground="Green"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center">
 
-                </TextBlock>
-                        <Image x:Name="PicImage"
+                        </TextBlock>
+                        <Image x:Name="PicImage" Visibility="{Binding ImageVisibility}"
                             Grid.Row="2" Width="300" Height="300"
                                Source="{Binding PostImage}"></Image>
                         <WrapPanel Grid.Row="3" HorizontalAlignment="Left"
@@ -54,7 +65,7 @@
                             <Button  Width="100" Background="White" FontSize="20">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Name="likeCount" Text="{Binding PostLikes}"/>
-                                    <materialDesign:PackIcon Kind="HeartOutline" Width="30" Height="25"/>
+                                    <materialDesign:PackIcon Kind="{Binding LikeIcon}" Foreground="Green" Width="30" Height="25"/>
                                 </StackPanel>
                             </Button>
                             <Button  Width="100" Background="White" FontSize="20">
@@ -63,22 +74,170 @@
                                     <materialDesign:PackIcon Kind="ShareOutline" Height="25" Width="30"/>
                                 </StackPanel>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20">
+                            <!--<Expander Panel.ZIndex="1" Width="100" Background="White"
+                                      BorderBrush="Green" FontSize="20"
+                                      x:Name="exComm" ExpandDirection="Up">
+                                <Expander.Header>
+                                    <TextBlock  Width="100" Background="White" FontSize="20">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock x:Name="commentCount" Text="150"/>
+                                            <materialDesign:PackIcon Kind="CommentOutline" Height="20" Width="30"/>
+                                        </StackPanel>
+                                    </TextBlock>
+                                </Expander.Header>
+                                <StackPanel>
+                                    <ListView x:Name="LVComments" Width="200" Height=" 200"
+                                          ItemsSource="{Binding CommentList}">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel>
+
+                                                </StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="50"/>
+                                                        <RowDefinition Height="*"/>
+
+                                                    </Grid.RowDefinitions>
+
+                                                    <WrapPanel VerticalAlignment="Center">
+                                                        <Image Source="{Binding PostPP}"
+                                                             Width="30" Height="30">
+
+                                                        </Image>
+                                                        <TextBlock FontSize="20"
+                                                               Foreground="Green"
+                                                               Text="{Binding CommentNick}">
+
+                                                        </TextBlock>
+                                                        <TextBlock Text="{Binding TimeOfWrite}"
+                                                               Foreground="Green"
+                                                               Margin="500 0 0 0">
+
+                                                        </TextBlock>
+                                                    </WrapPanel>
+
+                                                    <TextBlock Grid.Row="1"
+                                                           TextWrapping="Wrap"
+                                                           Foreground="Green"
+                                                           Text="{Binding Comment}"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="20">
+
+                                                    </TextBlock>
+
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+                              
+                            </Expander>-->
+                            <Button  Width="100" Background="White" FontSize="20"
+                                     x:Name="btnComment" 
+                                     Click="btnComment_Click">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Name="commentCount" Text="150"/>
+                                    <TextBlock x:Name="commentCount" Text="{Binding CommentCount}"/>
                                     <materialDesign:PackIcon Kind="CommentOutline" Height="20" Width="30"/>
                                 </StackPanel>
                             </Button>
                             <Button  Width="100" Background="White" FontSize="20">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Name="tagCount" Text="150"/>
+                                    <TextBlock x:Name="tagCount" Text="{Binding TagCount}"/>
                                     <materialDesign:PackIcon Kind="Tag" Height="20" Width="30"/>
                                 </StackPanel>
+                                <Button.ToolTip>
+                                    <ToolTip Background="LightGreen">
+                                        <TextBlock Text="{Binding Taging}" FontSize="10"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="Black" TextWrapping="Wrap">
+
+                                        </TextBlock>
+                                    </ToolTip>
+                                </Button.ToolTip>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20">
+                            <Button  Width="100" Background="White" FontSize="20"
+                                     >
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Name="popAppCount" Text="150"/>
+                                    <TextBlock Name="popAppCount" Text="{Binding PopAppCount}"/>
                                     <materialDesign:PackIcon Kind="HammerWrench" Height="20" Width="30"/>
+                                </StackPanel>
+                            </Button>
+
+                        </WrapPanel>
+                        <ListView x:Name="LVComments" Height="{Binding LVHeight}" Width="500"
+                                     Grid.Row="4" Visibility="{Binding ListVisability}"
+                                  Margin=" 20 0 0 0 "
+                                   ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                          ItemsSource="{Binding CommentList}">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel>
+
+                                    </StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="*"/>
+
+
+
+                                        </Grid.RowDefinitions>
+
+                                        <WrapPanel VerticalAlignment="Center">
+                                            <Image Source="{Binding PostPP}"
+                                                             Width="30" Height="30">
+
+                                            </Image>
+                                            <TextBlock FontSize="20"
+                                                               Foreground="Green"
+                                                               Text="{Binding CommentNick}">
+
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding TimeOfWrite}"
+                                                               Foreground="Green"
+                                                               FontSize="20"
+                                                               Margin="150 0 0 0">
+
+                                            </TextBlock>
+                                        </WrapPanel>
+
+                                        <TextBlock Grid.Row="1"
+                                                           TextWrapping="Wrap"
+                                                           Foreground="Green"
+                                                           Text="{Binding Comment}"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="20">
+
+                                        </TextBlock>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <WrapPanel Visibility="{Binding WPVisibility}" Grid.Row="5" VerticalAlignment="Center">
+                            <TextBox FontSize="20" TextWrapping="Wrap" Width="400"
+                                     Margin="0 0 10 0" x:Name="txtComm"
+                                     TextChanged="txtComm_TextChanged"
+                                     materialDesign:HintAssist.Hint="Оставить коментарий">
+
+                            </TextBox>
+                            <Button  Width="80" Background="Green" FontSize="20"
+                                     Margin=" 10 0 0 0" Name="btnAddComm"
+                                     Click="btnAddComm_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Send" Height="20" Width="30"/>
                                 </StackPanel>
                             </Button>
                         </WrapPanel>
@@ -86,6 +245,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-       
+
+
     </Grid>
 </Page>

@@ -14,5 +14,6 @@ namespace ArtOkDesign.Classes
         public static Image postImage { get; set; }
         public static string ImagePath { get; set; }
         public static FileDialog FileDialogFile { get; set; }
+        public static Post[] Posts { get; set; }
     }
 }

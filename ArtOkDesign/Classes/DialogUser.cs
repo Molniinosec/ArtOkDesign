@@ -14,6 +14,6 @@ namespace ArtOkDesign.Classes
 
         public Dialog Dialog { get; set; }
         public User User { get; set; }
-        public ICollection<Message> Message { get; set; }
+        public ICollection<Messages> Message { get; set; }
     }
 }

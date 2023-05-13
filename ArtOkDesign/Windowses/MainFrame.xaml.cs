@@ -27,13 +27,19 @@ namespace ArtOkDesign.Windowses
     /// </summary>
     public partial class MainFrame : Window
     {
+        public List<Tag> GTags=new List<Tag>();
         public static System.Windows.Controls.Image global_sender;
         public MainFrame()
         {
             InitializeComponent();
             PostFrame.Navigate(new PostPage(1));
+            FillTagList();
         }
 
+        public async void FillTagList()
+        {
+            lvTagsInAddPost.ItemsSource = await ApiController.GetAllTags();
+        }
         private void btnAllPosts_Click(object sender, RoutedEventArgs e)
         {
             PostFrame.Navigate(new PostPage(1));
@@ -71,8 +77,7 @@ namespace ArtOkDesign.Windowses
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
             encoder.Save(memStream);
-
-            
+           
 
             Post createPost = new Post();
             //createPost.IFile = bitmapImage;
@@ -85,6 +90,38 @@ namespace ArtOkDesign.Windowses
             imgPost.Source = new BitmapImage(new Uri(@"C:\\Users\\izran\\source\\repos\\ArtOkDesign\\ArtOkDesign\\Res\\addImage.png"));
             await ApiController.PushPost(createPost);
             await ApiController.PushImage(createPost, memStream.ToArray());
+            GC.Collect();
         }
+
+        private void btnProfile_Click(object sender, RoutedEventArgs e)
+        {
+            PostFrame.Navigate(new ProfilePage());
+        }
+
+        private void btnSelectDialog_Click(object sender, RoutedEventArgs e)
+        {
+            PostFrame.Navigate(new SelectDialog());
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((sender as CheckBox).IsChecked == true)
+            {
+                GTags.Add(((sender as CheckBox).DataContext as Tag));
+            }
+            else
+            {
+                GTags.Remove(((sender as CheckBox).DataContext as Tag));
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && sender is TextBox)
+            {
+                PostFrame.Navigate(new PostPage(txtSearch.Text));
+            }
+        }
+
     }
 }

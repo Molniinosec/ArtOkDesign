@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Template" Height="500" Width="800">
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -60,5 +60,122 @@
                 </StackPanel>
             </Button>
         </WrapPanel>
+    </Grid>-->
+    <!--<Grid>
+        <StackPanel>
+            <Button Click="Button_Click"></Button>
+            <ListView x:Name="LVComments" 
+                      Visibility="Collapsed"
+                          ItemsSource="{Binding CommentList}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel>
+
+                        </StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+
+                            <WrapPanel VerticalAlignment="Center">
+                                <Image Source="{Binding PostPP}"
+                                                             Width="30" Height="30">
+
+                                </Image>
+                                <TextBlock FontSize="20"
+                                                               Foreground="Green"
+                                                               Text="{Binding CommentNick}">
+
+                                </TextBlock>
+                                <TextBlock Text="{Binding TimeOfWrite}"
+                                                               Foreground="Green"
+                                                               Margin="500 0 0 0">
+
+                                </TextBlock>
+                            </WrapPanel>
+
+                            <TextBlock Grid.Row="1"
+                                                           TextWrapping="Wrap"
+                                                           Foreground="Green"
+                                                           Text="{Binding Comment}"
+                                                           HorizontalAlignment="Left"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="20">
+
+                            </TextBlock>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <TextBlock VerticalAlignment="Center"> Im here</TextBlock>
+    </Grid>-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <WrapPanel Grid.ColumnSpan="2">
+            <Image Source="{Binding a}"></Image>
+            <TextBlock FontSize="20" Foreground="Green">
+
+            </TextBlock>
+        </WrapPanel>
+        <ListView Grid.Column="1" HorizontalAlignment="Left"
+                  Margin=" 10 0 0 0"
+                  VerticalAlignment="Center"
+                  
+                  ScrollViewer.CanContentScroll="False"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel></StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.RowSpan="2" Width="50" Height="50"
+                               Source="{Binding profpic}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left">
+                            
+                        </Image>
+                        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Grid.Column="1">
+                            <TextBlock FontSize="20" Foreground="Green"
+                                       Text="{Binding nick}">
+                                
+                            </TextBlock>
+                            <TextBlock FontSize="20" Foreground="Green"
+                                       Text="{Binding time}">
+
+                            </TextBlock>
+                        </WrapPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   FontSize="20" Foreground="Green"
+                                   TextWrapping="Wrap"
+                                   Text="{Binding message}">
+                            
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

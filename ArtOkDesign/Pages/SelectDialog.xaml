@@ -1,0 +1,94 @@
+﻿<Page x:Class="ArtOkDesign.Pages.SelectDialog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ArtOkDesign.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SelectDialog">
+
+    <Grid>
+        <ListView x:Name="lvDialogs" HorizontalAlignment="Left"
+                  Margin=" 10 0 0 0"
+                  VerticalAlignment="Center"
+                  SelectionChanged="lvDialogs_SelectionChanged"
+                  ScrollViewer.CanContentScroll="False"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel>
+                    </StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                        <WrapPanel>
+                            <Image Height="30" Width="30" Source="{Binding DialogPicture}"></Image>
+                            <TextBlock Text="{Binding Name}" FontSize="20" Foreground="Green">
+
+                            </TextBlock>
+                        </WrapPanel>
+                        <ListView Grid.Column="1" HorizontalAlignment="Left"
+                  Margin=" 10 0 0 0" ItemsSource="{Binding DialogMessages}"
+                  VerticalAlignment="Center"
+                  Width="750"
+                  ScrollViewer.CanContentScroll="False"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="{Binding gridWidth}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Grid.RowSpan="2" Width="50" Height="50"
+                               Source="{Binding MessPP}" Visibility="{Binding MessPPVisibility}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left">
+
+                                        </Image>
+                                        <WrapPanel HorizontalAlignment="{Binding GridHorizont}" VerticalAlignment="Center"
+                                   Grid.Column="1">
+                                            <TextBlock FontSize="20" Foreground="Green"
+                                                       Margin="10 0 10 0"
+                                       Text="{Binding MessNickName}">
+
+                                            </TextBlock>
+                                            <TextBlock FontSize="20" Foreground="Green"
+                                                       Margin="10 0 0 0"
+                                       Text="{Binding TimeOfSend}">
+
+                                            </TextBlock>
+                                        </WrapPanel>
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   FontSize="20" Foreground="Green"
+                                   TextWrapping="Wrap" HorizontalAlignment="{Binding GridHorizont}"
+                                                   Margin="10 0 0 0"
+                                   Text="{Binding Message}">
+
+                                        </TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

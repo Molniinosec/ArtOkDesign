@@ -1,5 +1,4 @@
-﻿using ArtOkDesign.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,15 +15,13 @@ using System.Windows.Shapes;
 namespace ArtOkDesign.Windowses
 {
     /// <summary>
-    /// Логика взаимодействия для Template.xaml
+    /// Логика взаимодействия для Comenttemp.xaml
     /// </summary>
-    public partial class Template : Window
+    public partial class Comenttemp : Window
     {
-        public Template()
+        public Comenttemp()
         {
             InitializeComponent();
-
         }
-
     }
 }

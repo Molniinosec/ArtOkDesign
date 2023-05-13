@@ -14,6 +14,8 @@ using System.Drawing;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using Microsoft.AspNetCore.Http;
+using System.Security.Permissions;
+using System.Windows.Shapes;
 
 namespace ArtOkDesign.Classes
 {
@@ -64,6 +66,16 @@ namespace ArtOkDesign.Classes
             }   
             return posts;
         }
+        public static async Task<Post[]> GetCurrentUserPosts(int IDUser)
+        {
+            Post[] posts = null;
+            var response = await client.GetAsync($"https://localhost:2222/api/Post/{IDUser}");
+            if (response.IsSuccessStatusCode)
+            {
+                posts = await response.Content.ReadAsAsync<Post[]>();
+            }
+            return posts;
+        }
         public static async Task<User> CheckUser(User user)
         {
             HttpResponseMessage response = await client.GetAsync($"https://localhost:2222/api/User/UserExist?login={user.NickName}&password={user.Password}");
@@ -85,6 +97,66 @@ namespace ArtOkDesign.Classes
             }
             return follower;
         }
+        public static async Task<PostComment[]> GetPostComments(int IdPost)
+        {
+            PostComment[] comments = null;
+            var responce = await client.GetAsync($"https://localhost:2222/api/PostComment/{IdPost}");
+            if (responce.IsSuccessStatusCode)
+            {
+                comments=await responce.Content.ReadAsAsync<PostComment[]>();
+            }
+            return comments;
+        }
+        public static async Task<Dialog[]> GetUserDialogs(int IDUser)
+        {
+            Dialog[] dialogs = null;
+            var responce = await client.GetAsync($"https://localhost:2222/api/DialogUser/{IDUser}");
+            if (responce.IsSuccessStatusCode)
+            {
+                dialogs = await responce.Content.ReadAsAsync<Dialog[]>();
+            }
+            return dialogs;
+        }
+        public static async Task<DialogUser[]> GetAllUsersInDialog(int IDDialog)
+        {
+            DialogUser[] dialogs = null;
+            var response = await client.GetAsync($"https://localhost:2222/api/DialogUser/AllDialogs-{IDDialog}");
+            if (response.IsSuccessStatusCode)
+            {
+                dialogs = await response.Content.ReadAsAsync<DialogUser[]>();
+            }
+            return dialogs;
+        }
+        public static async Task<Like[]> GetUserLikes(int iDUser)
+        {
+            Like[] likes = null;
+            var response = await client.GetAsync($"https://localhost:2222/api/Like/User-{iDUser}");
+            if (response.IsSuccessStatusCode)
+            {
+                likes = await response.Content.ReadAsAsync<Like[]>();
+            }
+            return likes;
+        }
+        public static async Task<string> AdLike(Like like)
+        {
+            var res = await client.PostAsJsonAsync($"https://localhost:2222/api/Like/AddLike", like);
+            return await res.Content.ReadAsStringAsync();
+        }
+        public static async Task<string> DeleteLike(int IDlike)
+        {
+            var res = await client.DeleteAsync($"https://localhost:2222/api/Like/DeleteLike-{IDlike}");
+            return await res.Content.ReadAsStringAsync();
+        }
+        public static async Task<Messages[]> GetAllMessageInDialog(int IDUserDialog)
+        {
+            Messages[] messages = null;
+            var response = await client.GetAsync($"https://localhost:2222/api/DialogUser/Messages-{IDUserDialog}");
+            if (response.IsSuccessStatusCode)
+            {
+                messages = await response.Content.ReadAsAsync<Messages[]>();
+            }
+            return messages;
+        }
         public static async Task<Follower[]> GetCurrentUserFollowers(int IDUser)
         {
             Follower[] follower = null;
@@ -96,6 +168,93 @@ namespace ArtOkDesign.Classes
             return follower;
             
         }
+        public static async Task<int> GetPopAppCount(int IDPost)
+        {
+            int count = 0;
+            var response = await client.GetAsync($"https://localhost:2222/api/PopApp/PopApps-{IDPost}");
+            if (response.IsSuccessStatusCode)
+            {
+                count = await response.Content.ReadAsAsync<int>();
+            }
+            return count;
+        }
+
+        public static async Task<int> GetTagCount(int IDPost)
+        {
+            int count = 0;
+            var response = await client.GetAsync($"https://localhost:2222/api/Tag/TagCount-{IDPost}");
+            if (response.IsSuccessStatusCode)
+            {
+                count = await response.Content.ReadAsAsync<int>();
+            }
+            return count;
+        }
+        public static async Task<int> GetCommentCount(int IDPost)
+        {
+            int count = 0;
+            var response = await client.GetAsync($"https://localhost:2222/api/PostComment/comment-{IDPost}");
+            if (response.IsSuccessStatusCode)
+            {
+                count = await response.Content.ReadAsAsync<int>();
+            }
+            return count;
+        }
+        public static async Task<int> GetFollowersCount(int IDUser)
+        {
+            int count = 0;
+            var response = await client.GetAsync($"https://localhost:2222/api/Follower/CountFollowers/{IDUser}");
+            if (response.IsSuccessStatusCode)
+            {
+                count = await response.Content.ReadAsAsync<int>();
+            }
+            return count;
+        }
+        public static async Task<int> GetFollowedCount(int IDUser)
+        {
+            int count = 0;
+            var response = await client.GetAsync($"https://localhost:2222/api/Follower/CountFollowed/{IDUser}");
+            if (response.IsSuccessStatusCode)
+            {
+                count = await response.Content.ReadAsAsync<int>();
+            }
+            return count;
+        }
+        public static async Task<byte[]> GetProfileBackgroun(int UserID)
+        {
+            byte[] file = null;
+            var responce = await client.GetAsync($"https://localhost:2222/api/User/{UserID}/ProfilePicture");
+            if (responce.IsSuccessStatusCode)
+            {
+                file = await responce.Content.ReadAsByteArrayAsync();
+            }
+            return file;
+        }
+        public static async Task<Tag[]> GetAllTags()
+        {
+            Tag[] file = null;
+            var responce = await client.GetAsync($"https://localhost:2222/api/Tag");
+            if (responce.IsSuccessStatusCode)
+            {
+                file = await responce.Content.ReadAsAsync<Tag[]>();
+            }
+            return file;
+        }
+        public static async Task<string> PushPostTag(PostTag postTag)
+        {
+            var responce = await client.PostAsJsonAsync($"https://localhost:2222/api/Tag/PostTagSave", postTag);
+            return await responce.Content.ReadAsStringAsync();
+
+        }
+        public static async Task<byte[]> GetProfilePicture(int UserID)
+        {
+            byte[] file = null;
+            var responce = await client.GetAsync($"https://localhost:2222/api/User/{UserID}/ProfileBackGround");
+            if (responce.IsSuccessStatusCode)
+            {
+                file = await responce.Content.ReadAsByteArrayAsync();
+            }
+            return file;
+        }
         public static async Task<int> GetPostLikes(int IDPost)
         {
             int likes = 0;
@@ -105,6 +264,16 @@ namespace ArtOkDesign.Classes
                 likes = await responce.Content.ReadAsAsync<int>();
             }
             return likes;
+        }
+        public static async Task<Tag[]> GetPostTags(int IDPost)
+        {
+            Tag[] tags = null;
+            var responce = await client.GetAsync($"https://localhost:2222/api/Tag/followers{IDPost}");
+            if (responce.IsSuccessStatusCode)
+            {
+                tags = await responce.Content.ReadAsAsync<Tag[]>();
+            }
+            return tags;
         }
         public static async Task<byte[]> GetImage(int IDPost)
         {
@@ -119,6 +288,12 @@ namespace ArtOkDesign.Classes
         public static async Task<string> PushPost(Post post)
         {
             var res = await client.PostAsJsonAsync($"https://localhost:2222/api/Post/CreatePost", post);
+
+            return await res.Content.ReadAsStringAsync();
+        }
+        public static async Task<string> PushComment(PostComment postComment)
+        {
+            var res = await client.PostAsJsonAsync($"https://localhost:2222/api/PostComment/CreateComment", postComment);
 
             return await res.Content.ReadAsStringAsync();
         }
