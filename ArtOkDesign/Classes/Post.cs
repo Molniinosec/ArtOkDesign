@@ -41,6 +41,7 @@ namespace ArtOkDesign.Classes
         public BitmapImage IFile { get; set; }
         public byte[] UserProfPicture { get; set; }
         public string Taging { get; set; }
+        public string PopApping { get; set; }
         public PostComment[] CommentList { get; set; }
         public string WPVisibility { get; set; }      
         public string ImageVisibility { get; set; }
@@ -48,5 +49,6 @@ namespace ArtOkDesign.Classes
         public string ListVisability { get; set; }
         public bool IsDialogsHidden { get; set; }
         public string LikeIcon { get; set; }
+        public int LikeID { get; set; }
     }   
 }

@@ -23,6 +23,7 @@ namespace ArtOkDesign.Pages
     public partial class SelectDialog : Page
     {
         List<Messages> GlobMessages= new List<Messages>();
+        int CurrentDialogID= 0;
         public SelectDialog()
         {
             InitializeComponent();
@@ -54,7 +55,7 @@ namespace ArtOkDesign.Pages
                     dialog.DialogMessages = null;
                 }
             }
-
+            
             lvDialogs.ItemsSource = dialogs;
         }
         public async void GetMessages(int IDDialog)
@@ -76,16 +77,20 @@ namespace ArtOkDesign.Pages
 
                         message.MessPPVisibility = "Collapsed";
                         message.GridHorizont = "Right";
+                        message.GridBack = "LightYellow";
                     }
                     else
                     {
                         message.MessPPVisibility = "Visible";
                         message.GridHorizont = "Left";
+                        message.GridBack = "LightGray";
                     }
                     messages.Add(message);
                 }
             }
+            messages = messages.OrderBy(message => message.TimeOfSend).OfType<Messages>().ToList();
             GlobMessages = messages;
+            txtSend.Visibility = Visibility.Visible;
            GetDialogs(IDDialog);
         }
 
@@ -93,9 +98,31 @@ namespace ArtOkDesign.Pages
         {
             if(lvDialogs.SelectedItem is Dialog)
             {
-                int _IDDialog = (lvDialogs.SelectedItem as Dialog).ID;
-                GetMessages(_IDDialog);
+                CurrentDialogID = (lvDialogs.SelectedItem as Dialog).ID;
+                GetMessages(CurrentDialogID);
 
+            }
+        }
+
+        private async void txtSend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                DialogUser[] dialogUsers = await ApiController.GetAllUsersInDialog(CurrentDialogID);
+                foreach (DialogUser user in dialogUsers)
+                {
+                    if (user.IDUser == GlobalInformation.currentUser.ID)
+                    {
+                        Messages newMessages = new Messages();
+                        newMessages.IDUserDialog = user.ID;
+                        newMessages.Message = txtSend.Text;
+                        newMessages.TimeOfSend = DateTime.Now;
+                        await ApiController.PushMessage(newMessages);
+                        break;
+                    }
+                }             
+                GetMessages(CurrentDialogID);
+                txtSend.Text = "";
             }
         }
     }

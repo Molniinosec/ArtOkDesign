@@ -22,5 +22,6 @@ namespace ArtOkDesign.Classes
         public string GridHorizont { get; set; }
         public string MessPPVisibility { get; set; }
         public string gridWidth { get; set; }
+        public string GridBack { get; set; }
     }
 }

@@ -28,6 +28,10 @@ namespace ArtOkDesign.Windowses
     public partial class MainFrame : Window
     {
         public List<Tag> GTags=new List<Tag>();
+        public List<PopApp> GpopApps=new List<PopApp>();
+        public List<Tag> SearchTag=new List<Tag>();
+        public List<PopApp> SearchPopApp =new List<PopApp>();
+
         public static System.Windows.Controls.Image global_sender;
         public MainFrame()
         {
@@ -39,6 +43,7 @@ namespace ArtOkDesign.Windowses
         public async void FillTagList()
         {
             lvTagsInAddPost.ItemsSource = await ApiController.GetAllTags();
+            LVPopAppInPost.ItemsSource= await ApiController.GetAllPopApps();
         }
         private void btnAllPosts_Click(object sender, RoutedEventArgs e)
         {
@@ -90,6 +95,22 @@ namespace ArtOkDesign.Windowses
             imgPost.Source = new BitmapImage(new Uri(@"C:\\Users\\izran\\source\\repos\\ArtOkDesign\\ArtOkDesign\\Res\\addImage.png"));
             await ApiController.PushPost(createPost);
             await ApiController.PushImage(createPost, memStream.ToArray());
+            var currentPost = await ApiController.GetPostsAsync($"https://localhost:2222/api/Post/{GlobalInformation.currentUser.ID}");
+
+            foreach (Tag tag in GTags)
+            {
+                PostTag postTag = new PostTag();
+                postTag.IDPost = currentPost[0].ID;
+                postTag.IDTag = tag.ID;
+                await ApiController.PushPostTag(postTag);
+            }
+            foreach(PopApp popApp in GpopApps)
+            {
+                PostPopApp postPopApp = new PostPopApp();
+                postPopApp.IDPost = currentPost[0].ID;
+                postPopApp.IDPopApp = popApp.ID;
+                await ApiController.PushPostPopApp(postPopApp);
+            }
             GC.Collect();
         }
 
@@ -114,6 +135,17 @@ namespace ArtOkDesign.Windowses
                 GTags.Remove(((sender as CheckBox).DataContext as Tag));
             }
         }
+        private void CheckBoxPopApp_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((sender as CheckBox).IsChecked == true)
+            {
+                GpopApps.Add(((sender as CheckBox).DataContext as PopApp));
+            }
+            else
+            {
+                GpopApps.Remove(((sender as CheckBox).DataContext as PopApp));
+            }
+        }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
@@ -122,6 +154,28 @@ namespace ArtOkDesign.Windowses
                 PostFrame.Navigate(new PostPage(txtSearch.Text));
             }
         }
-
+        
+        private void SearchTag_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if ((sender as CheckBox).IsChecked == true)
+            {
+                SearchTag.Add(((sender as CheckBox).DataContext as Tag));
+            }
+            else
+            {
+                SearchTag.Remove(((sender as CheckBox).DataContext as Tag));
+            }
+        }
+        private void SearchPopApp_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if ((sender as CheckBox).IsChecked == true)
+            {
+                SearchPopApp.Add(((sender as CheckBox).DataContext as PopApp));
+            }
+            else
+            {
+                SearchPopApp.Remove(((sender as CheckBox).DataContext as PopApp));
+            }
+        }
     }
 }

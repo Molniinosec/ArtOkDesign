@@ -70,6 +70,7 @@ namespace ArtOkDesign.Pages
                     else
                     {
                         post.LikeIcon = "Heart";
+                        post.LikeID = like.ID;
                         break;
                     }
                 }
@@ -84,6 +85,7 @@ namespace ArtOkDesign.Pages
                 post.CommentCount = await ApiController.GetCommentCount(post.ID);
                 post.PopAppCount = await ApiController.GetPopAppCount(post.ID);
                 post.TagCount= await ApiController.GetTagCount(post.ID);
+                post.RepostCount= await ApiController.GetRepostCount(post.ID);
       
                 if(image !=null)
                 {
@@ -107,13 +109,26 @@ namespace ArtOkDesign.Pages
         }
         public async void GetPosts(int IDPost)
         {
-
+            Like[] Listlikes = await ApiController.GetUserLikes(GlobalInformation.currentUser.ID);
             //Post[] posts = await ApiController.GetPostsAsync($"https://localhost:2222/api/Post");
             foreach (Post post in GPost)
             {
                 User user = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{post.IDUser}");
                 Tag[] tags = await ApiController.GetPostTags(post.ID);
 
+                foreach (Like like in Listlikes)
+                {
+                    if (like.IDPost != post.ID)
+                    {
+                        post.LikeIcon = "HeartOutline";
+                    }
+                    else
+                    {
+                        post.LikeIcon = "Heart";
+                        post.LikeID = like.ID;
+                        break;
+                    }
+                }
                 foreach (Tag tag in tags)
                 {
                     post.Taging += tag.NameTag + ", ";
@@ -125,6 +140,7 @@ namespace ArtOkDesign.Pages
                 post.CommentCount = await ApiController.GetCommentCount(post.ID);
                 post.PopAppCount = await ApiController.GetPopAppCount(post.ID);
                 post.TagCount = await ApiController.GetTagCount(post.ID);
+                post.RepostCount = await ApiController.GetRepostCount(post.ID);
 
                 if (image != null)
                 {
@@ -203,6 +219,7 @@ namespace ArtOkDesign.Pages
 
         public async void GetUserFollowersPosts()
         {
+            Like[] Listlikes = await ApiController.GetUserLikes(GlobalInformation.currentUser.ID);
             List<Post> posts = new List<Post>();
             Follower[] followers = await ApiController.GetCurrentUserFollowers(GlobalInformation.currentUser.ID);
             foreach (Follower follower in followers)
@@ -212,7 +229,24 @@ namespace ArtOkDesign.Pages
                 {
                     User user = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{post.IDUser}");
                     Tag[] tags = await ApiController.GetPostTags(post.ID);
-
+                    PopApp[] popApp = await ApiController.GetPostPopApps(post.ID);
+                    foreach (Like like in Listlikes)
+                    {
+                        if (like.IDPost != post.ID)
+                        {
+                            post.LikeIcon = "HeartOutline";
+                        }
+                        else
+                        {
+                            post.LikeIcon = "Heart";
+                            post.LikeID = like.ID;
+                            break;
+                        }
+                    }
+                    foreach( PopApp pApps in popApp)
+                    {
+                        post.PopApping += pApps.NamePopApp + ", ";
+                    }
                     foreach (Tag tag in tags)
                     {
                         post.Taging += tag.NameTag + ", ";
@@ -224,6 +258,8 @@ namespace ArtOkDesign.Pages
                     post.CommentCount = await ApiController.GetCommentCount(post.ID);
                     post.PopAppCount = await ApiController.GetPopAppCount(post.ID);
                     post.TagCount = await ApiController.GetTagCount(post.ID);
+                    post.RepostCount = await ApiController.GetRepostCount(post.ID);
+
 
                     if (image != null)
                     {
@@ -265,6 +301,23 @@ namespace ArtOkDesign.Pages
         private void txtComm_TextChanged(object sender, TextChangedEventArgs e)
         {
             _Comment = (sender as TextBox).Text;
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(((sender as Button).DataContext as Post).LikeIcon == "HeartOutline")
+            {
+                Like newlike = new Like();
+                newlike.IDUser= GlobalInformation.currentUser.ID;
+                newlike.IDPost = ((sender as Button).DataContext as Post).ID;
+                newlike.DateOfLike = DateTime.Now;
+                await ApiController.AdLike(newlike);
+            }
+            else
+            {
+                await ApiController.DeleteLike(((sender as Button).DataContext as Post).LikeID);           
+            }
+            GetPosts(((sender as Button).DataContext as Post).ID);
         }
     }
 }

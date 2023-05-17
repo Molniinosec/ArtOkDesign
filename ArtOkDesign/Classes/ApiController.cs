@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.AspNetCore.Http;
 using System.Security.Permissions;
 using System.Windows.Shapes;
+using System.Runtime.Remoting.Messaging;
 
 namespace ArtOkDesign.Classes
 {
@@ -55,6 +56,11 @@ namespace ArtOkDesign.Classes
                 user = await response.Content.ReadAsAsync<User>();             
             }
             return user;
+        }
+        public static async Task<string> AddUser(User user)
+        {
+            var res = await client.PostAsJsonAsync($"\r\nhttps://localhost:2222/api/User", user);
+            return await res.Content.ReadAsStringAsync();
         }
         public static async Task<Post[]> GetPostsAsync(string path)
         {
@@ -142,7 +148,12 @@ namespace ArtOkDesign.Classes
             var res = await client.PostAsJsonAsync($"https://localhost:2222/api/Like/AddLike", like);
             return await res.Content.ReadAsStringAsync();
         }
-        public static async Task<string> DeleteLike(int IDlike)
+        public static async Task<string> PushMessage(Messages message)
+        {
+            var res = await client.PostAsJsonAsync($"https://localhost:2222/api/DialogUser/MessageAdd", message);
+            return await res.Content.ReadAsStringAsync();
+        }
+        public static async Task<string> DeleteLike(int? IDlike)
         {
             var res = await client.DeleteAsync($"https://localhost:2222/api/Like/DeleteLike-{IDlike}");
             return await res.Content.ReadAsStringAsync();
@@ -157,6 +168,16 @@ namespace ArtOkDesign.Classes
             }
             return messages;
         }
+        public static async Task<int> GetRepostCount(int IDPost)
+        {
+            int count = 0;
+            var res = await client.GetAsync($"https://localhost:2222/api/Post/RepostCount-{IDPost}");
+            if (res.IsSuccessStatusCode)
+            {
+                count = await res.Content.ReadAsAsync<int>();
+            }
+            return count;
+        }
         public static async Task<Follower[]> GetCurrentUserFollowers(int IDUser)
         {
             Follower[] follower = null;
@@ -167,6 +188,16 @@ namespace ArtOkDesign.Classes
             }
             return follower;
             
+        }
+        public static async Task<PopApp[]> GetAllPopApps()
+        {
+            PopApp[] popApps = null;
+            var response = await client.GetAsync($"https://localhost:2222/api/PopApp");
+            if (response.IsSuccessStatusCode)
+            {
+                popApps = await response.Content.ReadAsAsync<PopApp[]>();
+            }
+            return popApps;
         }
         public static async Task<int> GetPopAppCount(int IDPost)
         {
@@ -244,6 +275,21 @@ namespace ArtOkDesign.Classes
             var responce = await client.PostAsJsonAsync($"https://localhost:2222/api/Tag/PostTagSave", postTag);
             return await responce.Content.ReadAsStringAsync();
 
+        }
+        public static async Task<string> PushPostPopApp(PostPopApp popApp)
+        {
+            var res = await client.PostAsXmlAsync($"https://localhost:2222/api/PopApp/AddPopApp", popApp);
+            return await res.Content.ReadAsStringAsync();
+        }
+        public static async Task<PopApp[]> GetPostPopApps(int iDPost)
+        {
+            PopApp[] popApps = null;
+            var res = await client.GetAsync($"https://localhost:2222/api/PopApp/{iDPost}");
+            if (res.IsSuccessStatusCode)
+            {
+                popApps = await res.Content.ReadAsAsync<PopApp[]>();
+            }
+            return popApps;
         }
         public static async Task<byte[]> GetProfilePicture(int UserID)
         {

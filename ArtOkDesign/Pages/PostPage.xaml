@@ -12,9 +12,9 @@
     <Grid>
 
         <ListView x:Name="LvPosts" HorizontalAlignment="Left"
-                  Margin=" 10 0 0 0" Width="750"
+                   Width="750"
                   VerticalAlignment="Center"
-                  
+
                   ScrollViewer.CanContentScroll="False"
                   ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.ItemsPanel>
@@ -25,7 +25,7 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Background="LightGray" Margin="150 0 0 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="*"/>
@@ -62,15 +62,16 @@
                                Source="{Binding PostImage}"></Image>
                         <WrapPanel Grid.Row="3" HorizontalAlignment="Left"
                     VerticalAlignment="Center">
-                            <Button  Width="100" Background="White" FontSize="20">
+                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green"
+                                     Click="Button_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Name="likeCount" Text="{Binding PostLikes}"/>
-                                    <materialDesign:PackIcon Kind="{Binding LikeIcon}" Foreground="Green" Width="30" Height="25"/>
+                                    <materialDesign:PackIcon Kind="{Binding LikeIcon}" Width="30" Height="25"/>
                                 </StackPanel>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20">
+                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Name="repostCont" Text="150"/>
+                                    <TextBlock x:Name="repostCont" Text="{Binding RepostCount}"/>
                                     <materialDesign:PackIcon Kind="ShareOutline" Height="25" Width="30"/>
                                 </StackPanel>
                             </Button>
@@ -138,7 +139,7 @@
                                 </StackPanel>
                               
                             </Expander>-->
-                            <Button  Width="100" Background="White" FontSize="20"
+                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green"
                                      x:Name="btnComment" 
                                      Click="btnComment_Click">
                                 <StackPanel Orientation="Horizontal">
@@ -146,7 +147,7 @@
                                     <materialDesign:PackIcon Kind="CommentOutline" Height="20" Width="30"/>
                                 </StackPanel>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20">
+                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock x:Name="tagCount" Text="{Binding TagCount}"/>
                                     <materialDesign:PackIcon Kind="Tag" Height="20" Width="30"/>
@@ -162,12 +163,22 @@
                                     </ToolTip>
                                 </Button.ToolTip>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20"
+                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green"
                                      >
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Name="popAppCount" Text="{Binding PopAppCount}"/>
                                     <materialDesign:PackIcon Kind="HammerWrench" Height="20" Width="30"/>
                                 </StackPanel>
+                                <Button.ToolTip>
+                                    <ToolTip Background="LightGreen">
+                                        <TextBlock Text="{Binding PopApping}" FontSize="10"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="Black" TextWrapping="Wrap">
+
+                                        </TextBlock>
+                                    </ToolTip>
+                                </Button.ToolTip>
                             </Button>
 
                         </WrapPanel>

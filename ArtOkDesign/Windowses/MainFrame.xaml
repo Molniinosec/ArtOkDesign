@@ -28,7 +28,41 @@
                    FontSize="20">
 
             </TextBox>
-         
+
+            <Expander Margin="0 0 25 0" VerticalAlignment="Center"
+                              >
+                <Expander.Header>
+                    <materialDesign:PackIcon Kind="Tag" Width="25" Height="25">
+
+                    </materialDesign:PackIcon>
+                </Expander.Header>
+                <ListView x:Name="SearchlvTagsInAddPost" Height="100">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox FontSize="12" Unchecked="SearchTag_Unchecked"
+                                              Checked="SearchTag_Unchecked"  Content="{Binding NameTag}"></CheckBox>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Expander>
+
+            <Expander Margin="0 0 25 0" VerticalAlignment="Center"
+                              >
+                <Expander.Header>
+                    <materialDesign:PackIcon Kind="HammerWrench" Width="25" Height="25">
+
+                    </materialDesign:PackIcon>
+                </Expander.Header>
+                <ListView x:Name="SearchLVPopAppInPost" Height="100">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox FontSize="12" Unchecked="SearchPopApp_Unchecked"
+                                              Checked="SearchPopApp_Unchecked"  Content="{Binding NamePopApp}"></CheckBox>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Expander>
+
         </WrapPanel>
         <Expander Grid.Column="1" Grid.RowSpan="2"
                   VerticalAlignment="top"
@@ -54,7 +88,7 @@
                        
                     Source="/Res/addImage.png"></Image>
                 <WrapPanel HorizontalAlignment="Center">
-                    <Expander Margin="0 0 100 0" VerticalAlignment="Center"
+                    <Expander Margin="0 0 25 0" VerticalAlignment="Center"
                               >
                         <Expander.Header>
                             <materialDesign:PackIcon Kind="Tag" Width="25" Height="25">
@@ -70,6 +104,24 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Expander>
+
+                    <Expander Margin="0 0 25 0" VerticalAlignment="Center"
+                              >
+                        <Expander.Header>
+                            <materialDesign:PackIcon Kind="HammerWrench" Width="25" Height="25">
+
+                            </materialDesign:PackIcon>
+                        </Expander.Header>
+                        <ListView x:Name="LVPopAppInPost" Height="100">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox FontSize="12" Unchecked="CheckBoxPopApp_Checked"
+                                              Checked="CheckBoxPopApp_Checked"  Content="{Binding NamePopApp}"></CheckBox>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Expander>
+
                     <Button  Width="150" Background="White" FontSize="20" 
                          Click="Button_Click">
                         <StackPanel Orientation="Horizontal">
