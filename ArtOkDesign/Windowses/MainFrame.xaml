@@ -18,25 +18,31 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <WrapPanel Grid.Column="1"
-                    VerticalAlignment="Center">
-            <TextBox x:Name="txtSearch"
-                   Height="50" Width="600"
+        <TextBox x:Name="txtSearch"
+                   Height="50" Width="500"
                    Foreground="Green"
                    KeyDown="txtSearch_KeyDown"
+                 Grid.Column="1" VerticalAlignment="Top"
                    materialDesign:HintAssist.Hint="Поиск"
                    FontSize="20">
 
-            </TextBox>
+        </TextBox>
+        <!--<WrapPanel Grid.Column="1" Panel.ZIndex="2"
+                   Grid.RowSpan="2"
+                    VerticalAlignment="Top">-->
 
-            <Expander Margin="0 0 25 0" VerticalAlignment="Center"
-                              >
+
+        <Expander Margin="0 0 15 0" Grid.Column="1" Panel.ZIndex="2"
+                   Grid.RowSpan="2" Width="125"
+                    VerticalAlignment="Top"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                    HorizontalAlignment="Left"          >
                 <Expander.Header>
                     <materialDesign:PackIcon Kind="Tag" Width="25" Height="25">
 
                     </materialDesign:PackIcon>
                 </Expander.Header>
-                <ListView x:Name="SearchlvTagsInAddPost" Height="100">
+                <ListView x:Name="SearchlvTagsInASearchPost" Height="100">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <CheckBox FontSize="12" Unchecked="SearchTag_Unchecked"
@@ -46,14 +52,17 @@
                 </ListView>
             </Expander>
 
-            <Expander Margin="0 0 25 0" VerticalAlignment="Center"
-                              >
+        <Expander Margin="120 0 0 0" Grid.Column="1" Panel.ZIndex="2"
+                   Grid.RowSpan="2" Width="125"
+                    VerticalAlignment="Top"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                     HorizontalAlignment="Left"        >
                 <Expander.Header>
                     <materialDesign:PackIcon Kind="HammerWrench" Width="25" Height="25">
 
                     </materialDesign:PackIcon>
                 </Expander.Header>
-                <ListView x:Name="SearchLVPopAppInPost" Height="100">
+                <ListView x:Name="SearchLVPopAppInSearchPost" Height="100">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <CheckBox FontSize="12" Unchecked="SearchPopApp_Unchecked"
@@ -63,7 +72,7 @@
                 </ListView>
             </Expander>
 
-        </WrapPanel>
+        <!--</WrapPanel>-->
         <Expander Grid.Column="1" Grid.RowSpan="2"
                   VerticalAlignment="top"
                   HorizontalAlignment="Right"
@@ -193,7 +202,7 @@
             </Frame>
 
        
-        <Image Source="/Res/326UEVTsopU.jpg">
+        <Image Source="/Res/ArtOkLogo.png">
             
         </Image>
     </Grid>

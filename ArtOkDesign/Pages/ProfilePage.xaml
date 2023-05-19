@@ -17,6 +17,13 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top"
+                Background="{x:Null}" Foreground="Green"
+                Width="75" Height="50" Click="Button_Click_1">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Settings" Width="25" Height="25"/>
+            </StackPanel>
+        </Button>
         <Border Background="LightGreen" Width="600">
             <Image x:Name="ImgBackground"
                Panel.ZIndex="0"

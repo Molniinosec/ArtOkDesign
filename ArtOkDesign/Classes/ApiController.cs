@@ -253,7 +253,7 @@ namespace ArtOkDesign.Classes
         public static async Task<byte[]> GetProfileBackgroun(int UserID)
         {
             byte[] file = null;
-            var responce = await client.GetAsync($"https://localhost:2222/api/User/{UserID}/ProfilePicture");
+            var responce = await client.GetAsync($"https://localhost:2222/api/User/{UserID}/ProfileBackGround");
             if (responce.IsSuccessStatusCode)
             {
                 file = await responce.Content.ReadAsByteArrayAsync();
@@ -294,12 +294,18 @@ namespace ArtOkDesign.Classes
         public static async Task<byte[]> GetProfilePicture(int UserID)
         {
             byte[] file = null;
-            var responce = await client.GetAsync($"https://localhost:2222/api/User/{UserID}/ProfileBackGround");
+
+            var responce = await client.GetAsync($"https://localhost:2222/api/User/{UserID}/ProfilePicture");
             if (responce.IsSuccessStatusCode)
             {
                 file = await responce.Content.ReadAsByteArrayAsync();
             }
             return file;
+        }
+        public static async Task<string> UpdateUser(User user)
+        {
+            var res = await client.PutAsJsonAsync($"https://localhost:2222/api/User/UpdateUser", user);
+            return await res.Content.ReadAsStringAsync();
         }
         public static async Task<int> GetPostLikes(int IDPost)
         {
@@ -343,26 +349,26 @@ namespace ArtOkDesign.Classes
 
             return await res.Content.ReadAsStringAsync();
         }
+        public static async Task<string> SaveFileInFolder(User user, byte[] image)
+        {
+            FilePic filePic = new FilePic();
+            filePic.ID=user.ID;
+            filePic.byteFile= image;
+            var res = await client.PostAsJsonAsync($"https://localhost:2222/api/Image/SaveFileInFolder", filePic);
+            return await res.Content.ReadAsStringAsync();
+        }
         public static async Task<string> PushImage(Post post, byte[] image)
         {
             var responce = await GetPostsAsync($"https://localhost:2222/api/Post/{post.IDUser}");
-            //var formContent = new MultipartFormDataContent
-            //{
-            //    {new StringContent($"{responce[0].ID}"), "ID"},
-            //    {new StreamContent(new MemoryStream(image)), "IFile"}
-            //};
-            //var fileStreamContent = new StreamContent(File.OpenRead(GlobalInformation.ImagePath));
-            //formContent.Add(fileStreamContent, "Ifile");
 
             FilePic filePic = new FilePic();
             filePic.ID= responce[0].ID;
             filePic.byteFile = image;
-            //filePic.Ifile =new BitmapImage(new Uri(GlobalInformation.FileDialogFile.FileName));
 
 
             var responcePic = await client.PostAsJsonAsync($"https://localhost:2222/api/Image/PicturePath", filePic);
             string res = await responcePic.Content.ReadAsStringAsync();
-            return res; ;
+            return res; 
         }
 
     }

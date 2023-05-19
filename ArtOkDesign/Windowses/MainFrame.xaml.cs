@@ -38,12 +38,15 @@ namespace ArtOkDesign.Windowses
             InitializeComponent();
             PostFrame.Navigate(new PostPage(1));
             FillTagList();
+            GlobalInformation.MainFrame = this.PostFrame;
         }
 
         public async void FillTagList()
         {
             lvTagsInAddPost.ItemsSource = await ApiController.GetAllTags();
             LVPopAppInPost.ItemsSource= await ApiController.GetAllPopApps();
+            SearchLVPopAppInSearchPost.ItemsSource= await ApiController.GetAllPopApps();
+            SearchlvTagsInASearchPost.ItemsSource = await ApiController.GetAllTags();
         }
         private void btnAllPosts_Click(object sender, RoutedEventArgs e)
         {
@@ -151,7 +154,7 @@ namespace ArtOkDesign.Windowses
         {
             if (e.Key == Key.Enter && sender is TextBox)
             {
-                PostFrame.Navigate(new PostPage(txtSearch.Text));
+                PostFrame.Navigate(new PostPage(txtSearch.Text,SearchTag,SearchPopApp));
             }
         }
         

@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ArtOkLogo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=2.1.2.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.2.1.2\lib\net462\MaterialDesignColors.dll</HintPath>
@@ -115,6 +118,9 @@
     <Compile Include="Classes\Repost.cs" />
     <Compile Include="Classes\Tag.cs" />
     <Compile Include="Classes\UserAchievement.cs" />
+    <Compile Include="Pages\EditProfilePage.xaml.cs">
+      <DependentUpon>EditProfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\PostPage.xaml.cs">
       <DependentUpon>PostPage.xaml</DependentUpon>
     </Compile>
@@ -133,6 +139,10 @@
     <Compile Include="Windowses\Template.xaml.cs">
       <DependentUpon>Template.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\EditProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\PostPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,6 +222,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Res\addImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Res\ArtOkLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Res\ArtOkLogo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ArtOkLogo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" />

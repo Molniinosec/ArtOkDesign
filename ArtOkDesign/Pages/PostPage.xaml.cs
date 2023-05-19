@@ -38,19 +38,83 @@ namespace ArtOkDesign.Pages
             else
                 GetUserFollowersPosts();
         }
-        public PostPage(string searchText)
+        public PostPage(string searchText,List<Tag> tags,List<PopApp> popApps)
         {
             InitializeComponent();
-            GetSearchPost(searchText);
+            GetSearchPost(searchText, tags,popApps);
         }
-        public void GetSearchPost(string Search)
+        public async void GetSearchPost(string Search,List<Tag> TagSearch,List<PopApp> popAppSearch)
         {
             List<Post> PostList= GlobalInformation.Posts.ToList();
             if (!String.IsNullOrWhiteSpace(Search))
             {
                 PostList = PostList.Where(p => p.Description.ToLower().Contains(Search)).ToList();
             }
-            LvPosts.ItemsSource= PostList;
+            List<Post> PostTag = new List<Post>();
+            if(TagSearch.Count != 0 && popAppSearch.Count!=0)
+            {
+                foreach (Post post in PostList)
+                {
+                    Tag[] tags = await ApiController.GetPostTags(post.ID);
+                    foreach (Tag tag in TagSearch)
+                    {
+                        Tag check =tags.Where(t => t.ID == tag.ID).FirstOrDefault();
+                        if (check != null)
+                        {
+                            PopApp[] popApps = await ApiController.GetPostPopApps(post.ID);
+                            foreach (PopApp popApp in popApps)
+                            {
+                                PopApp checkPopApp = popApps.Where(p => p.ID == popApp.ID).FirstOrDefault();
+                                if (checkPopApp != null)
+                                {
+                                    PostTag.Add(post);
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
+                }
+                LvPosts.ItemsSource = PostTag;
+            }
+            else if (TagSearch.Count != 0)
+            {
+                foreach (Post post in PostList)
+                {
+                    Tag[] tags = await ApiController.GetPostTags(post.ID);
+                    foreach (Tag tag in TagSearch)
+                    {
+                        Tag check = tags.Where(t => t.ID == tag.ID).FirstOrDefault();
+                        if (check != null)
+                        {                          
+                            PostTag.Add(post);
+                            break;                             
+                        }
+                    }
+                }
+                LvPosts.ItemsSource = PostTag;
+            }
+            else if (popAppSearch.Count != 0)
+            {
+                foreach (Post post in PostList)
+                {
+                    PopApp[] popApps = await ApiController.GetPostPopApps(post.ID);
+                    foreach (PopApp popApp in popApps)
+                    {
+                        PopApp checkPopApp = popApps.Where(p => p.ID == popApp.ID).FirstOrDefault();
+                        if (checkPopApp != null)
+                        {
+                            PostTag.Add(post);
+                            break;
+                        }
+                    }
+                }
+                LvPosts.ItemsSource = PostTag;
+            }
+            else
+            {
+                LvPosts.ItemsSource = PostList;
+            }        
         }
         public async void GetPosts()
         {
@@ -61,6 +125,7 @@ namespace ArtOkDesign.Pages
             {
                 User user = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{post.IDUser}");
                 Tag[] tags = await ApiController.GetPostTags(post.ID);
+                PopApp[] popApps = await ApiController.GetPostPopApps(post.ID);
                 foreach(Like like in Listlikes)
                 {
                     if (like.IDPost != post.ID)
@@ -73,6 +138,10 @@ namespace ArtOkDesign.Pages
                         post.LikeID = like.ID;
                         break;
                     }
+                }
+                foreach (PopApp pop in popApps)
+                {
+                    post.PopApping += pop.NamePopApp + ", ";
                 }
                 foreach(Tag tag in tags)
                 {
@@ -115,7 +184,7 @@ namespace ArtOkDesign.Pages
             {
                 User user = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{post.IDUser}");
                 Tag[] tags = await ApiController.GetPostTags(post.ID);
-
+                PopApp[] popApps = await ApiController.GetPostPopApps(post.ID);
                 foreach (Like like in Listlikes)
                 {
                     if (like.IDPost != post.ID)
@@ -128,6 +197,10 @@ namespace ArtOkDesign.Pages
                         post.LikeID = like.ID;
                         break;
                     }
+                }
+                foreach (PopApp pop in popApps)
+                {
+                    post.PopApping += pop.NamePopApp + ", ";
                 }
                 foreach (Tag tag in tags)
                 {
