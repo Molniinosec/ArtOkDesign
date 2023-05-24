@@ -77,13 +77,13 @@ namespace ArtOkDesign.Pages
 
                         message.MessPPVisibility = "Collapsed";
                         message.GridHorizont = "Right";
-                        message.GridBack = "LightYellow";
+                        message.GridBack = "#FF34837D";
                     }
                     else
                     {
                         message.MessPPVisibility = "Visible";
                         message.GridHorizont = "Left";
-                        message.GridBack = "LightGray";
+                        message.GridBack = "{x:null}";
                     }
                     messages.Add(message);
                 }
@@ -124,6 +124,11 @@ namespace ArtOkDesign.Pages
                 GetMessages(CurrentDialogID);
                 txtSend.Text = "";
             }
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalInformation.MainFrame.Navigate(new CreateDialog());
         }
     }
 }

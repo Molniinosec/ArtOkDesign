@@ -84,7 +84,7 @@ namespace ArtOkDesign.Classes
         }
         public static async Task<User> CheckUser(User user)
         {
-            HttpResponseMessage response = await client.GetAsync($"https://localhost:2222/api/User/UserExist?login={user.NickName}&password={user.Password}");
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:2222/api/User/UserExist?mail={user.Email}&password={user.Password}");
             if (response.IsSuccessStatusCode)
             {
                 User message = await response.Content.ReadAsAsync<User>();
@@ -92,6 +92,16 @@ namespace ArtOkDesign.Classes
 
             }
             return null;
+        }
+        public static async Task<string> AddFollower(Follower follower)
+        {
+            var res = await client.PostAsJsonAsync($"https://localhost:2222/api/Follower/AddFollower", follower);
+            return await res.Content.ReadAsStringAsync();
+        }
+        public static async Task<string> RemoveFollower(int IDFollower)
+        {
+            var res = await client.DeleteAsync($"https://localhost:2222/api/Follower/Delete-{IDFollower}");
+            return await res.Content.ReadAsStringAsync();
         }
         public static async Task<Follower[]> GetFollowerAsync()
         {
@@ -370,6 +380,27 @@ namespace ArtOkDesign.Classes
             string res = await responcePic.Content.ReadAsStringAsync();
             return res; 
         }
+        public static async Task<Dialog[]> GetDialogs()
+        {
+            Dialog[] dialogs = null;
+            var res = await client.GetAsync($"https://localhost:2222/api/DialogUser/AllDialogs");
+            if (res.IsSuccessStatusCode)
+            {
+                dialogs = await res.Content.ReadAsAsync<Dialog[]>();
+            }
+            return dialogs;
+        }
+        public static async Task<string> AddDialog(Dialog dialog)
+        {
+            var res = await client.PostAsJsonAsync($"https://localhost:2222/api/DialogUser/CreateDialog", dialog);
 
+            return await res.Content.ReadAsStringAsync();
+        }
+        public static async Task<string> AddUserInDialog(DialogUser dialogUser)
+        {
+            var res = await client.PostAsJsonAsync($"https://localhost:2222/api/DialogUser/AddUserInDialog", dialogUser);
+
+            return await res.Content.ReadAsStringAsync();
+        }
     }
 }

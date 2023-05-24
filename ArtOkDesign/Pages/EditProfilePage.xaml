@@ -47,6 +47,7 @@
                    VerticalAlignment="Center"
                    FontSize="20" Width="250"
                    Name="tbNick"
+                 Foreground="LightGreen"
                    >
 
         </TextBox>
@@ -55,7 +56,7 @@
                 Name="btnEdit" FontSize="20"
                 Grid.Row="2"
                 Click="btnEdit_Click"
-                BorderBrush="Green" Foreground="Green">
+                BorderBrush="LightGreen" Foreground="LightGreen">
 
         </Button>
     </Grid>

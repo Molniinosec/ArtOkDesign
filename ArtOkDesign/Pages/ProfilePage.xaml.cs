@@ -24,27 +24,43 @@ namespace ArtOkDesign.Pages
     /// </summary>
     public partial class ProfilePage : Page
     {
-        public User currentUser;
+        public int currentUser;
         public bool openDialog = false;
         public Post[] GPost = null;
         public string _Comment;
 
+
         public ProfilePage()
         {
             InitializeComponent();
-            currentUser = GlobalInformation.currentUser;
+            currentUser = GlobalInformation.currentUser.ID;
+            btnFollow.Visibility= Visibility.Collapsed;
+            btnChange.Visibility = Visibility.Visible;
+            GetProfile();
+            GetPosts();
+        }
+        public ProfilePage(int id)
+        {
+            InitializeComponent();
+            currentUser = id;
+            btnFollow.Visibility= Visibility.Visible;
+            btnChange.Visibility = Visibility.Collapsed;
+            CheckFollows();
             GetProfile();
             GetPosts();
         }
 
         public async void GetProfile()
         {
-            tbNick.Text = currentUser.NickName;
-            byte[] profPicture = await ApiController.GetProfilePicture(currentUser.ID);
-            byte[] profBackground = await ApiController.GetProfileBackgroun(currentUser.ID);
-            tbFollowers.Text = Convert.ToString(await ApiController.GetFollowersCount(currentUser.ID));
-            tbFollowed.Text = Convert.ToString(await ApiController.GetFollowedCount(currentUser.ID));
-            if(profPicture != null)
+            User temp = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{currentUser}");
+
+            tbNick.Text =temp.NickName;
+
+            byte[] profPicture = await ApiController.GetProfilePicture(currentUser);
+            byte[] profBackground = await ApiController.GetProfileBackgroun(currentUser);
+            tbFollowers.Text = Convert.ToString(await ApiController.GetFollowersCount(currentUser));
+            tbFollowed.Text = Convert.ToString(await ApiController.GetFollowedCount(currentUser));
+            if(profPicture != null && profPicture.Length>1 ) 
             {
                 MemoryStream byteStream = new MemoryStream(profPicture);
                 BitmapImage image = new BitmapImage();
@@ -54,7 +70,7 @@ namespace ArtOkDesign.Pages
 
                 ImgPP.Source = image;
             }
-            if (profBackground != null)
+            if (profBackground != null && profBackground.Length>1)
             {
                 MemoryStream byteStream = new MemoryStream(profBackground);
                 BitmapImage image = new BitmapImage();
@@ -71,9 +87,11 @@ namespace ArtOkDesign.Pages
         {
             Like[] Listlikes = await ApiController.GetUserLikes(GlobalInformation.currentUser.ID);
 
-            Post[] posts = await ApiController.GetCurrentUserPosts(currentUser.ID);
+            Post[] posts = await ApiController.GetCurrentUserPosts(currentUser);
             foreach (Post post in posts)
             {
+                PopApp[] popApps = await ApiController.GetPostPopApps(post.ID);
+
                 User user = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{post.IDUser}");
                 Tag[] tags = await ApiController.GetPostTags(post.ID);
                 foreach (Like like in Listlikes)
@@ -92,6 +110,10 @@ namespace ArtOkDesign.Pages
                 foreach (Tag tag in tags)
                 {
                     post.Taging += tag.NameTag + ", ";
+                }
+                foreach (PopApp pop in popApps)
+                {
+                    post.PopApping += pop.NamePopApp + ", ";
                 }
                 byte[] image = await ApiController.GetImage(post.ID);
                 post.PostNickName = user.NickName;
@@ -241,6 +263,43 @@ namespace ArtOkDesign.Pages
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             GlobalInformation.MainFrame.Navigate(new EditProfilePage());
+        }
+
+        private async void btnFollow_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnFollow.Content.ToString()== "Подписаться")
+            {
+                Follower addfollower= new Follower();
+                addfollower.IDCurrentUser= GlobalInformation.currentUser.ID;
+                addfollower.IDFollowedUser = currentUser;
+                addfollower.TimeOfFollowing= DateTime.Now;
+                await ApiController.AddFollower(addfollower);
+                GlobalInformation.MainFrame.Navigate(new ProfilePage(currentUser));
+            }
+            else
+            {
+                Follower[] temp = await ApiController.GetFollowerAsync();
+                await ApiController.RemoveFollower(temp[0].ID);
+                GlobalInformation.MainFrame.Navigate(new ProfilePage(currentUser));
+
+            }
+        }
+        public async void CheckFollows()
+        {
+            Follower[] GUserFollows = await ApiController.GetCurrentUserFollowers(GlobalInformation.currentUser.ID);
+            List<Follower> temp = GUserFollows.ToList();
+            if (temp.Any(t => t.IDFollowedUser == currentUser))
+            {
+                btnFollow.Foreground = Brushes.Red;
+                btnFollow.Content = "Отписаться";
+            }
+            else
+            {
+                btnFollow.Foreground = Brushes.LightGreen;
+                btnFollow.Content = "Подписаться";
+            }
+
+
         }
     }
 }

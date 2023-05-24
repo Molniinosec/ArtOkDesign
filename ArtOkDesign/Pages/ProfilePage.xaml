@@ -18,8 +18,9 @@
         </Grid.RowDefinitions>
 
         <Button HorizontalAlignment="Right" VerticalAlignment="Top"
-                Background="{x:Null}" Foreground="Green"
-                Width="75" Height="50" Click="Button_Click_1">
+                Background="{x:Null}" Foreground="LightGreen"
+                Width="75" Height="50" Click="Button_Click_1"
+                Name="btnChange">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="Settings" Width="25" Height="25"/>
             </StackPanel>
@@ -50,6 +51,7 @@
                    VerticalAlignment="Center"
                    FontSize="20"
                    Name="tbNick"
+                   Foreground="LightGreen"
                    Text="{Binding NickName}">
             
         </TextBlock>
@@ -59,27 +61,36 @@
                    VerticalAlignment="Center">
             <TextBlock 
                 FontSize="15" Text="Подписчики"
+                Foreground="LightGreen"
                 Margin="0 0 5 0">
 
             </TextBlock>
             <TextBlock 
-                x:Name="tbFollowers"
+                x:Name="tbFollowers" Foreground="LightGreen"
                 FontSize="15" Text="{Binding FollowersCount}"
                 Margin="5 0 5 0">
 
             </TextBlock>
             <TextBlock 
-                FontSize="15" Text="Подписан"
+                FontSize="15" Text="Подписан" Foreground="LightGreen"
                 Margin="5 0 5 0">
 
             </TextBlock>
             <TextBlock 
-                Name="tbFollowed"
+                Name="tbFollowed" Foreground="LightGreen"
                 FontSize="15" Text="{Binding FollowedCount}"
                 Margin="5 0 5 0">
 
             </TextBlock>
         </WrapPanel>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                Grid.Row="1" Grid.RowSpan="2"
+                Background="{x:Null}" Foreground="LightGreen"
+                 Click="btnFollow_Click"
+                Content="Подписаться"
+                Name="btnFollow">
+
+        </Button>
         <ListView x:Name="LvPosts" HorizontalAlignment="Center"
                   Margin=" 10 0 0 0"
                   Grid.Row="3"
@@ -161,9 +172,9 @@
                             </Button>
                         </WrapPanel>
                     </Grid>-->
-                    
-                    
-                    <Grid Background="LightGray" Margin="50 0 0 0">
+
+
+                    <Grid Background="#FF34837D" Margin="50 0 0 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="*"/>
@@ -180,7 +191,7 @@
                             </Image>
                             <TextBlock Text="{Binding PostNickName}"
                               FontSize="20"
-                              Foreground="Green"
+                              Foreground="LightGreen"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center">
 
@@ -190,7 +201,7 @@
                         <TextBlock Grid.Row="1" Text="{Binding Description}"
             FontSize="20"
             TextWrapping="Wrap"
-            Foreground="Green"
+            Foreground="LightGreen"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center">
 
@@ -200,14 +211,15 @@
                                Source="{Binding PostImage}"></Image>
                         <WrapPanel Grid.Row="3" HorizontalAlignment="Left"
                     VerticalAlignment="Center">
-                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green"
+                            <Button  Width="100" Background="{x:Null}" FontSize="20" Foreground="LightGreen"
                                      Click="Button_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Name="likeCount" Text="{Binding PostLikes}"/>
                                     <materialDesign:PackIcon Kind="{Binding LikeIcon}" Width="30" Height="25"/>
                                 </StackPanel>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green">
+                            <Button  Visibility="Collapsed"
+                                Width="100" Background="{x:Null}" FontSize="20" Foreground="LightGreen">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock x:Name="repostCont" Text="{Binding RepostCount}"/>
                                     <materialDesign:PackIcon Kind="ShareOutline" Height="25" Width="30"/>
@@ -277,7 +289,7 @@
                                 </StackPanel>
                               
                             </Expander>-->
-                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green"
+                            <Button  Width="100" Background="{x:Null}" FontSize="20" Foreground="LightGreen"
                                      x:Name="btnComment" 
                                      Click="btnComment_Click">
                                 <StackPanel Orientation="Horizontal">
@@ -285,7 +297,7 @@
                                     <materialDesign:PackIcon Kind="CommentOutline" Height="20" Width="30"/>
                                 </StackPanel>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green">
+                            <Button  Width="100" Background="{x:Null}" FontSize="20" Foreground="LightGreen">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock x:Name="tagCount" Text="{Binding TagCount}"/>
                                     <materialDesign:PackIcon Kind="Tag" Height="20" Width="30"/>
@@ -301,12 +313,22 @@
                                     </ToolTip>
                                 </Button.ToolTip>
                             </Button>
-                            <Button  Width="100" Background="White" FontSize="20" Foreground="Green"
+                            <Button  Width="100" Background="{x:Null}" FontSize="20" Foreground="LightGreen"
                                      >
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Name="popAppCount" Text="{Binding PopAppCount}"/>
                                     <materialDesign:PackIcon Kind="HammerWrench" Height="20" Width="30"/>
                                 </StackPanel>
+                                <Button.ToolTip>
+                                    <ToolTip Background="LightGreen">
+                                        <TextBlock Text="{Binding PopApping}" FontSize="10"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="Black" TextWrapping="Wrap">
+
+                                        </TextBlock>
+                                    </ToolTip>
+                                </Button.ToolTip>
                             </Button>
 
                         </WrapPanel>
@@ -339,12 +361,12 @@
 
                                             </Image>
                                             <TextBlock FontSize="20"
-                                                               Foreground="Green"
+                                                               Foreground="LightGreen"
                                                                Text="{Binding CommentNick}">
 
                                             </TextBlock>
                                             <TextBlock Text="{Binding TimeOfWrite}"
-                                                               Foreground="Green"
+                                                               Foreground="LightGreen"
                                                                FontSize="20"
                                                                Margin="150 0 0 0">
 
@@ -353,7 +375,7 @@
 
                                         <TextBlock Grid.Row="1"
                                                            TextWrapping="Wrap"
-                                                           Foreground="Green"
+                                                           Foreground="LightGreen"
                                                            Text="{Binding Comment}"
                                                            HorizontalAlignment="Left"
                                                            VerticalAlignment="Center"
@@ -372,7 +394,7 @@
                                      materialDesign:HintAssist.Hint="Оставить коментарий">
 
                             </TextBox>
-                            <Button  Width="80" Background="Green" FontSize="20"
+                            <Button  Width="80" Background="LightGreen" FontSize="20"
                                      Margin=" 10 0 0 0" Name="btnAddComm"
                                      Click="btnAddComm_Click">
                                 <StackPanel Orientation="Horizontal">

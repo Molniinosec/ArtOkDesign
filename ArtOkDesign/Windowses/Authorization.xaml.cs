@@ -23,17 +23,18 @@ namespace ArtOkDesign
     /// </summary>
     public partial class Authorization : Window
     {
+
         public Authorization()
         {
             InitializeComponent();
-            ApiController.RunAsync().GetAwaiter().GetResult();
+            //ApiController.RunAsync().GetAwaiter().GetResult();
         }
 
         private async void btnCancel_Click(object sender, RoutedEventArgs e)
         {
 
             User user = new User();
-            user.NickName = txtLogin.Text;
+            user.Email = txtLogin.Text;
             user.Password = txtPassword.Password;
             User loginUser = await ApiController.CheckUser(user);
             if (loginUser != null)

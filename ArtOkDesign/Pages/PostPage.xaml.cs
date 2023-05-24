@@ -76,6 +76,7 @@ namespace ArtOkDesign.Pages
                     }
                 }
                 LvPosts.ItemsSource = PostTag;
+                GPost = PostTag.ToArray();
             }
             else if (TagSearch.Count != 0)
             {
@@ -93,6 +94,7 @@ namespace ArtOkDesign.Pages
                     }
                 }
                 LvPosts.ItemsSource = PostTag;
+                GPost = PostTag.ToArray();
             }
             else if (popAppSearch.Count != 0)
             {
@@ -110,10 +112,12 @@ namespace ArtOkDesign.Pages
                     }
                 }
                 LvPosts.ItemsSource = PostTag;
+                GPost = PostTag.ToArray();
             }
             else
             {
                 LvPosts.ItemsSource = PostList;
+                GPost = PostList.ToArray();
             }        
         }
         public async void GetPosts()
@@ -242,20 +246,10 @@ namespace ArtOkDesign.Pages
                         PostComment[] comments = await ApiController.GetPostComments(post.ID);
                         foreach (PostComment comment in comments)
                         {
-                            User userComm = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{post.IDUser}");
+                            User userComm = await ApiController.GetUserAsync($"https://localhost:2222/api/User/{comment.IDUser}");
                             comment.CommentNick = userComm.NickName;
-                            byte[] profPictureComm = await ApiController.GetProfilePicture(user.ID);
+                            byte[] profPictureComm = await ApiController.GetProfilePicture(userComm.ID);
                             comment.PostPP = profPictureComm;
-                            //if (openDialog == false)
-                            //{
-                            //    comment.ListVisability = "Collapsed";
-
-                            //}
-                            //else
-                            //{
-                            //    comment.ListVisability = "Visible";
-
-                            //}
                         }
                         
                         post.CommentList = comments;
@@ -391,6 +385,24 @@ namespace ArtOkDesign.Pages
                 await ApiController.DeleteLike(((sender as Button).DataContext as Post).LikeID);           
             }
             GetPosts(((sender as Button).DataContext as Post).ID);
+        }
+
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBlock)
+            {
+                var res = (sender as TextBlock).DataContext as Post;
+                GlobalInformation.MainFrame.Navigate(new ProfilePage(res.IDUser));
+            }
+        }
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Image)
+            {
+                var res = (sender as System.Windows.Controls.Image).DataContext as Post;
+                GlobalInformation.MainFrame.Navigate(new ProfilePage(res.IDUser));
+            }
         }
     }
 }

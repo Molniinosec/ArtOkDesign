@@ -7,8 +7,10 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        MinHeight="700" MaxHeight="700"
+        MinWidth="450" MaxWidth="450"
         Title="Авторизация" Height="700" Width="450">
-    <Grid>
+    <Grid Background="DarkSlateGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -25,14 +27,14 @@
         <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" 
                  x:Name="txtLogin"
                  MaxLength="50"
-                 Foreground="DarkGreen"
-                 Background="White"
-                 TextWrapping="Wrap"
-                 materialDesign:HintAssist.Hint="Логин"
+                 BorderBrush="LightGreen"
+                 Foreground="LightGreen"
+
+                 materialDesign:HintAssist.Hint="Email"
                  FontSize="20" HorizontalAlignment="Center"
                  VerticalAlignment="Center"    
-                 Width="200"
-                 Text="Molniinosec"
+                 Width="250"
+                 Text="Molniinosec@gmail.com"
                  
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}">
 
@@ -43,8 +45,9 @@
             <TextBox 
                  x:Name="RegMail"
                  MaxLength="50"
-                 Foreground="DarkGreen"
-                 Background="White"
+                BorderBrush="LightGreen"
+                 Foreground="LightGreen"
+                 Background="{x:Null}"
                  TextWrapping="Wrap"       
                  Margin="0 0 20 0"
                  materialDesign:HintAssist.Hint="Введите Email"
@@ -59,8 +62,9 @@
             <TextBox 
                  x:Name="RegLogin"
                  MaxLength="50"
-                 Foreground="DarkGreen"
-                 Background="White"
+                BorderBrush="LightGreen"
+                 Foreground="LightGreen"
+                 Background="{x:Null}"
                  TextWrapping="Wrap"           
                  Visibility="Collapsed"
                 GotFocus="RegMail_GotFocus"
@@ -77,12 +81,12 @@
         <PasswordBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" 
                  x:Name="txtPassword"
                  MaxLength="50"
-                 Foreground="Green"
-                   Background="White"
+                 Foreground="LightGreen"
+                     BorderBrush="LightGreen"
                  materialDesign:HintAssist.Hint="Пароль"
                  FontSize="20" HorizontalAlignment="Center"
                  VerticalAlignment="Center"    
-                 Width="200"      
+                 Width="250"      
                    
                  Password="A775s577z"
                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
@@ -94,8 +98,9 @@
             <PasswordBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" 
                  x:Name="RegPassword"
                  MaxLength="50"
-                 Foreground="Green"
-                   Background="White"
+                         BorderBrush="LightGreen"
+                 Foreground="LightGreen"
+                   Background="{x:Null}"
                          Margin=" 0 0 20 0"
                          Visibility="Collapsed"
                  materialDesign:HintAssist.Hint="Введите пароль"
@@ -109,9 +114,10 @@
             <PasswordBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" 
                  x:Name="RegRepeatPassword"
                  MaxLength="50"
-                 Foreground="Green"
+                         BorderBrush="LightGreen"
+                 Foreground="LightGreen"
                          Visibility="Collapsed"
-                   Background="White"
+                   Background="{x:Null}"
                          GotFocus="RegMail_GotFocus"
                  materialDesign:HintAssist.Hint="Повторите пароль"
                  FontSize="20" HorizontalAlignment="Center"
@@ -124,7 +130,8 @@
         <DatePicker Name="DPBirthday"
                     Grid.Row="3"
                     Width="200"
-                    Foreground="Green"
+                    BorderBrush="LightGreen"
+                    Foreground="LightGreen"
                     FontSize="20"
                     Visibility="Collapsed"
                     GotFocus="RegMail_GotFocus"
@@ -134,10 +141,10 @@
         
         <Button x:Name="btnLogin"
                 Grid.Row="3"
-                Height="50" Width="150"
-                BorderBrush="DarkGreen"
-                Foreground="DarkGreen"
-                
+                Height="50" Width="160"
+                BorderBrush="LightGreen"
+                Foreground="LightGreen"
+                Background="{x:Null}"
                 Content="Авторизоваться" FontSize="16"
                 materialDesign:ButtonAssist.CornerRadius="10"
                 Style="{StaticResource MaterialDesignPaperButton}" Click="btnCancel_Click">
@@ -148,8 +155,9 @@
             <Button x:Name="btnConfimRegistration"
                 Grid.Row="3"
                 Height="50" Width="200"
-                BorderBrush="DarkGreen"
-                Foreground="DarkGreen"    
+                    Background="{x:Null}"
+                BorderBrush="LightGreen"
+                Foreground="LightGreen"    
                     Visibility="Collapsed"
                 Content="Зарегистрироваться" FontSize="16"
                 materialDesign:ButtonAssist.CornerRadius="10"
@@ -160,7 +168,8 @@
                 Content="Зарегистрироваться"
                 FontSize="12" Click="btnSwitch_Click"
                 Height="50" Width="200"
-                
+                    BorderBrush="White"
+                Foreground="White"
                 Style="{StaticResource MaterialDesignToolButton}">
 
             </Button>

@@ -118,6 +118,9 @@
     <Compile Include="Classes\Repost.cs" />
     <Compile Include="Classes\Tag.cs" />
     <Compile Include="Classes\UserAchievement.cs" />
+    <Compile Include="Pages\CreateDialog.xaml.cs">
+      <DependentUpon>CreateDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EditProfilePage.xaml.cs">
       <DependentUpon>EditProfilePage.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
     <Compile Include="Windowses\Template.xaml.cs">
       <DependentUpon>Template.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\CreateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\EditProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

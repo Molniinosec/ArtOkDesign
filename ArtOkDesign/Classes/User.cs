@@ -27,5 +27,7 @@ namespace ArtOkDesign.Classes
         public ICollection<PostComment> PostComment { get; set; }
         public ICollection<Repost> Repost { get; set; }
         public ICollection<UserAchievement> UserAchievement { get; set; }
+
+        public string IconCheck { get; set; }
     }
 }

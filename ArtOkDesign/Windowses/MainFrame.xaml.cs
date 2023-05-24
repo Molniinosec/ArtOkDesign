@@ -180,5 +180,17 @@ namespace ArtOkDesign.Windowses
                 SearchPopApp.Remove(((sender as CheckBox).DataContext as PopApp));
             }
         }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnChangeProfile_Click(object sender, RoutedEventArgs e)
+        {
+            Authorization authorization = new Authorization();
+            authorization.Show();
+            this.Close();
+        }
     }
 }

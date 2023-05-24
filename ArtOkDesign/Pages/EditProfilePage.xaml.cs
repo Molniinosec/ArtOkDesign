@@ -64,17 +64,6 @@ namespace ArtOkDesign.Pages
 
         private async void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            //BitmapImage bitmapImagePP = new BitmapImage(new Uri(ppPath));
-            //MemoryStream memStream = new MemoryStream();
-            //JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            //encoder.Frames.Add(BitmapFrame.Create(bitmapImagePP));
-            //encoder.Save(memStream);
-
-            //BitmapImage bitmapImageBack = new BitmapImage(new Uri(backPath));
-            //MemoryStream memStreamB = new MemoryStream();
-            //encoder = new JpegBitmapEncoder();
-            //encoder.Frames.Add(BitmapFrame.Create(bitmapImageBack));
-            //encoder.Save(memStream);
 
             User updateUser = currentUser;
             if (!String.IsNullOrWhiteSpace(ppPath))
